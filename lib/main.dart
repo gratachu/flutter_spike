@@ -1,96 +1,77 @@
 import 'package:flutter/material.dart';
 
+// エントリーポイント
 void main() {
-  runApp(const MyApp());
+  runApp(const SimpleTextApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class SimpleTextApp extends StatelessWidget {
+  const SimpleTextApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Count Up/Down App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const CountPage(),
+      title: 'Simple Text Input/Output',
+      theme: ThemeData(primarySwatch: Colors.blueGrey),
+      home: const TextPage(),
     );
   }
 }
 
-class CountPage extends StatefulWidget {
-  const CountPage({super.key});
+class TextPage extends StatefulWidget {
+  const TextPage({Key? key}) : super(key: key);
 
   @override
-  State<CountPage> createState() => _CountPageState();
+  State<TextPage> createState() => _TextPageState();
 }
 
-class _CountPageState extends State<CountPage> {
-  int _counter = 0;
+class _TextPageState extends State<TextPage> {
+  // 入力されたテキストを保持するcontroller
+  final TextEditingController _controller = TextEditingController();
 
-  // カウントアップ
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  // 表示敵をスト保持する変数
+  String _displayText = '';
 
-  // カウントダウン
-  void _decrementCounter() {
+  // ボタン押下時の処理
+  void _onSendButtonPressed() {
     setState(() {
-      _counter--;
+      // controllerに入力されたテキストを取得し、表示テキストに設定
+      _displayText = _controller.text;
     });
-  }
 
-  // リセット（任意で実装）
-  void _resetCounter() {
-    setState(() {
-      _counter = 0;
-    });
+    _controller.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('カウントアップ・ダウン'),
+        title: const Text('Simple Text Input/Output'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '現在のカウント: $_counter',
-              style: const TextStyle(fontSize: 24),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: _counter >= 1 ? _decrementCounter : null,
-                  
-                  child: const Text('－'),
-                ),
-                const SizedBox(width: 20),
-                ElevatedButton(
-                  onPressed: _incrementCounter,
-                  child: const Text('＋'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _counter == 0 ? null : _resetCounter,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
+      body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              TextField(
+                  controller: _controller,
+                  decoration:
+                      const InputDecoration(hintText: 'Input your text here')),
+              const SizedBox(height: 16),
+
+              // 送信ボタン
+              ElevatedButton(
+                onPressed: _onSendButtonPressed,
+                child: const Text('Send'),
               ),
-              child: const Text('リセット'),
-            ),
-          ],
-        ),
-      ),
+              const SizedBox(height: 16),
+
+              // 表示部分
+              Text(
+                _displayText,
+                style: const TextStyle(fontSize: 20),
+              )
+            ],
+          )),
     );
   }
 }
