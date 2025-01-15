@@ -1,3 +1,4 @@
+import 'package:counter_app/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Simple Chat App',
       theme: ThemeData(primarySwatch: Colors.blueGrey),
-      home: const LoginPage(),
+      home: const SplashPage(),
     );
   }
 }

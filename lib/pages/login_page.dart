@@ -1,3 +1,4 @@
+import 'package:counter_app/pages/chat_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_app/services/supabase_service.dart';
 
@@ -22,6 +23,11 @@ class _LoginPageState extends State<LoginPage> {
         // ログイン成功時にSnackBarを表示
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('正常にログインしました')),
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const ChatListPage()),
         );
       } else {
         // currentUser が nullの場合はユーザーがキャンセルした等
@@ -59,7 +65,6 @@ class _LoginPageState extends State<LoginPage> {
             ] else ...[
               // ログイン済みの場合は任意のメッセージを表示 (オプション)
               const Text('現在ログイン中です'),
-              Text('ユーザーID: ${user.id}'),
             ],
           ],
         ),
